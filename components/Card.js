@@ -1,3 +1,7 @@
+import moment from "moment";
+import "moment/locale/ar";
+import momentTz from "moment-timezone";
+
 import { Text, View, StyleSheet, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons/";
 import { fontSize } from "../constants/styleObj";
@@ -11,7 +15,10 @@ const Card = ({ item }) => {
     niceToHave,
     city,
     contact,
-    whatYouWillDo,
+    youDo,
+    salary,
+    date,
+    _id,
   } = item;
 
   const navigation = useNavigation();
@@ -26,16 +33,30 @@ const Card = ({ item }) => {
         niceToHave,
         city,
         contact,
-        whatYouWillDo,
+        youDo,
+        salary,
+        date,
+        _id,
       },
     });
   };
+
+  const newDate = momentTz.tz(date, "Asia/Baghdad").format();
 
   return (
     <Pressable onPress={onPressHandler}>
       <View style={styles.outer}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
+          <View style={styles.dateContainer}>
+            {/* <Text style={styles.date}>
+              {moment(newDate).locale("ar").fromNow()}
+            </Text> */}
+            <Text style={styles.date}>
+              وقت النشر: &nbsp;
+              {moment(newDate).locale("ar").format("h:mm a  YYYY/MM/D ")}
+            </Text>
+          </View>
           <View style={styles.descriptionContainer}>
             <Text style={styles.city}>{city}</Text>
             <View style={styles.DescriptionLeft}>
@@ -54,7 +75,7 @@ export default Card;
 const styles = StyleSheet.create({
   outer: {
     flex: 1,
-    height: 100,
+    height: 130,
     marginVertical: 8,
     marginHorizontal: 8,
     borderRadius: 16,
@@ -80,8 +101,13 @@ const styles = StyleSheet.create({
     fontSize: fontSize.header,
     fontWeight: "bold",
   },
-  city: {
+  dateContainer: {
+    marginBottom: 8,
     marginTop: 16,
+  },
+  date: { fontSize: 12, textAlign: "right" },
+  city: {
+    // marginTop: 16,
     fontSize: fontSize.normal,
   },
   detailsText: {
