@@ -19,6 +19,8 @@ import {
 } from "../features/authenticate/authenticationSlice";
 import checkEmailValid from "../utils/checkEmailValid";
 
+//so?
+
 const LoginScreen = ({ navigation }) => {
   const { login, loginErrors } = useSelector((store) => store.authentication);
 
